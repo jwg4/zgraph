@@ -38,7 +38,7 @@ class TestZGraph(unittest.TestCase):
         ]
         expected = stl.Solid("ZGraph", facets)
     
-    def test_triangulate(self):
+    def test_triangulate_square(self):
         top_left_front     = stl.Vector3d(0, 0, 2)
         top_right_front    = stl.Vector3d(1, 0, 2)
         top_left_back      = stl.Vector3d(0, 1, 2)
