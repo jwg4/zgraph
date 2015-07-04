@@ -43,12 +43,12 @@ class TestZGraph(unittest.TestCase):
         top_right_front    = stl.Vector3d(1, 0, 2)
         top_left_back      = stl.Vector3d(0, 1, 2)
         top_right_back     = stl.Vector3d(1, 1, 2)
-        facets = [top_left_front,
-                  top_left_back,
-                  top_right_back,
-                  top_right_front]  
+        corners = [top_left_front,
+                   top_left_back,
+                   top_right_back,
+                   top_right_front]  
         normal = stl.Vector3d(0, 0, 1)
-        result = ZGraph.triangulate(normal, facets)
+        result = ZGraph.triangulate(normal, corners)
         self.assertEqual(len(result), 2)
         
     
