@@ -16,6 +16,7 @@ class TestZGraph(unittest.TestCase):
         def const_2(x, y):
             return 2
         graph = ZGraph((0,1), (0,1), const_2, 1)
+
         top_left_front     = stl.Vector3d(0, 0, 2)
         top_right_front    = stl.Vector3d(1, 0, 2)
         top_left_back      = stl.Vector3d(0, 1, 2)
@@ -24,19 +25,64 @@ class TestZGraph(unittest.TestCase):
         bottom_right_front = stl.Vector3d(1, 0, 0)
         bottom_left_back   = stl.Vector3d(0, 1, 0)
         bottom_right_back  = stl.Vector3d(1, 1, 0)
-        facets = [
-             # Top
-            stl.Facet(stl.Vector3d(0, 0, 1),
-                      (top_left_front, top_right_front, top_right_back)),    
-            stl.Facet(stl.Vector3d(0, 0, 1),
-                      (top_right_back, top_left_back, top_left_front)),    
-            # Bottom
-            stl.Facet(stl.Vector3d(0, 0, -1),
-                      (bottom_left_front, bottom_right_back, bottom_right_front)),    
-            stl.Facet(stl.Vector3d(0, 0, -1),
-                      (bottom_right_back, bottom_left_back, bottom_left_front)),    
-        ]
+        top = ZGraph.triangulate(
+            stl.Vector3d(0, 0, 1),
+            (
+                top_left_front,
+                top_right_front,
+                top_right_back,
+                top_left_back
+            )
+        )
+        bottom = ZGraph.triangulate(
+            stl.Vector3d(0, 0, -1),
+            (
+                bottom_left_front,
+                bottom_left_back,
+                bottom_right_back,
+                bottom_right_front
+            )
+        )
+        front = ZGraph.triangulate(
+            stl.Vector3d(0, -1, 0),
+            (
+                bottom_left_front,
+                bottom_right_front,
+                top_right_front,
+                top_left_front
+            )        
+        )
+        right = ZGraph.triangulate(
+            stl.Vector3d(1, 0, 0),
+            (
+                bottom_right_front,
+                bottom_right_back,
+                top_right_back,
+                top_right_front
+            )
+        )
+        back = ZGraph.triangulate(
+            stl.Vector3d(0, 1, 0),
+            (
+                bottom_left_back,
+                top_left_back,
+                top_right_back,
+                bottom_right_back
+            )        
+        )
+        left = ZGraph.triangulate(
+            stl.Vector3d(-1, 0, 0),
+            (
+                bottom_left_front,
+                top_left_front,
+                top_left_back,
+                bottom_left_back
+            )
+        )
+        facets = top + bottom + front + right + back + left
         expected = stl.Solid("ZGraph", facets)
+        
+        self.assertEqual(graph.solid_output(), expected)
     
     def test_triangulate_square(self):
         top_left_front     = stl.Vector3d(0, 0, 2)

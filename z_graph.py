@@ -14,6 +14,9 @@ class ZGraph(object):
         self.f = f
         self.n = n
         
+    def solid_output(self):
+        return stl.Solid(name="ZGraph")
+    
     @staticmethod
     def triangulate(normal, vertices):
         if len(vertices) < 3:
