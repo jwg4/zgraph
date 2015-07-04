@@ -51,4 +51,12 @@ class TestZGraph(unittest.TestCase):
         result = ZGraph.triangulate(normal, corners)
         self.assertEqual(len(result), 2)
         
+    def test_triangulate_triangle(self):
+        normal = stl.Vector3d(1, 1, 1)
+        a = stl.Vector3d(1, 0, 0)
+        b = stl.Vector3d(0, 1, 0)
+        c = stl.Vector3d(0, 0, 1)
+        expected = stl.Facet(normal, (a, b, c))
+        result = ZGraph.triangulate(normal, (a, b, c))
+        self.assertEqual(result[0], expected)
     
