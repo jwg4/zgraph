@@ -44,15 +44,10 @@ class ZGraph(object):
         
     @property
     def __top(self):
-        return self.triangulate(
-            self.up,
-            (
-                stl.Vector3d(self.x_range[0], self.y_range[0], 2),
-                stl.Vector3d(self.x_range[1], self.y_range[0], 2),
-                stl.Vector3d(self.x_range[1], self.y_range[1], 2),
-                stl.Vector3d(self.x_range[0], self.y_range[1], 2)
-            )
-        )
+        return [ f
+                    for sq in self.__grid_squares()
+                        for f in sq.facets 
+               ]
             
     @property
     def __bottom(self):
