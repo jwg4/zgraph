@@ -13,3 +13,10 @@ class GridSquare(object):
         self.b = b
         self.c = c
         self.d = d
+        
+    @property
+    def facets(self):
+        return [
+            stl.Facet(stl.Vector3d(0, 0, 0), (self.a, self.b, self.c)),        
+            stl.Facet(stl.Vector3d(0, 0, 0), (self.a, self.c, self.d))        
+        ]
