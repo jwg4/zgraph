@@ -7,6 +7,8 @@ Created on Sat Jul  4 14:03:34 2015
 
 import stl
 
+from grid_square import GridSquare
+
 class ZGraph(object):
     rightw = stl.Vector3d(1, 0, 0)
     leftw = stl.Vector3d(-1, 0, 0)
@@ -21,6 +23,24 @@ class ZGraph(object):
         self.f = f
         self.x_n = n
         self.y_n = n
+        
+    def __grid_squares(self):
+        x_ticks = self.__x_series
+        y_ticks = self.__y_series
+        for y in range(0, self.y_n):
+            for x in range(0, self.x_n):
+                yield GridSquare(*
+                    [
+                        self.__vector_f(*pair)
+                            for pair in
+                            [
+                                (x_ticks[x], y_ticks[y]),    
+                                (x_ticks[x], y_ticks[y+1]),    
+                                (x_ticks[x+1], y_ticks[y+1]),    
+                                (x_ticks[x+1], y_ticks[y]) 
+                            ]
+                    ]                                    
+                )
         
     @property
     def __top(self):
