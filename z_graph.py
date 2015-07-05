@@ -35,9 +35,9 @@ class ZGraph(object):
                             for pair in
                             [
                                 (x_ticks[x], y_ticks[y]),    
-                                (x_ticks[x], y_ticks[y+1]),    
+                                (x_ticks[x+1], y_ticks[y]),    
                                 (x_ticks[x+1], y_ticks[y+1]),    
-                                (x_ticks[x+1], y_ticks[y]) 
+                                (x_ticks[x], y_ticks[y+1]) 
                             ]
                     ]                                    
                 )
