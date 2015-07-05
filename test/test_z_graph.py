@@ -7,6 +7,8 @@ Created on Sat Jul  4 14:08:38 2015
 
 import unittest
 
+from math import sqrt
+
 import stl
 
 from z_graph import ZGraph
@@ -102,7 +104,7 @@ class TestZGraph(unittest.TestCase):
         bottom_right_back  = stl.Vector3d(1, 1, 0)
         top = [ 
                 stl.Facet(
-                    stl.Vector3d(0, -1, 1),
+                    stl.Vector3d(0, -1/sqrt(2), 1/sqrt(2)),
                     [
                         top_left_front, 
                         top_right_front,
@@ -110,7 +112,7 @@ class TestZGraph(unittest.TestCase):
                     ]                
                 ),
                 stl.Facet(
-                    stl.Vector3d(-1, 0, 1),
+                    stl.Vector3d(-1/sqrt(2), 0, 1/sqrt(2)),
                     [
                         top_left_front, 
                         top_right_back,
