@@ -17,6 +17,13 @@ class GridSquare(object):
     @property
     def facets(self):
         return [
-            stl.Facet(stl.Vector3d(0, 0, 0), (self.a, self.b, self.c)),        
-            stl.Facet(stl.Vector3d(0, 0, 0), (self.a, self.c, self.d))        
+            stl.Facet(self.normal(self.a, self.b, self.c),
+                      (self.a, self.b, self.c)),        
+            stl.Facet(self.normal(self.a, self.c, self.d),
+                      (self.a, self.c, self.d))        
         ]
+
+    @staticmethod
+    def normal(v1, v2, v3):
+        return stl.Vector3d(0, 0, 0)
+        

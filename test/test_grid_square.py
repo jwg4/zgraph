@@ -4,10 +4,11 @@ Created on Sun Jul  5 08:57:05 2015
 
 @author: jack
 """
+from math import sqrt
 
 import unittest
 
-from stl import Vector3d
+from stl import Vector3d, Facet
 
 from grid_square import GridSquare
 
@@ -27,3 +28,13 @@ class TestGridSquare(unittest.TestCase):
         d = Vector3d(1, 0, 1)
         gs = GridSquare(a, b, c, d)
         self.assertEqual(len(gs.facets), 2)
+        vertical = Vector3d(0, 0, 1)
+        self.assertEqual(gs.facets[0], Facet(vertical, (a, b, c)))
+        
+    def test_normal(self):
+        a = Vector3d(1, 0, 0)
+        b = Vector3d(0, 1, 0)
+        c = Vector3d(0, 0, 1)
+        expected = Vector3d(sqrt(3), sqrt(3), sqrt(3))
+        self.assertEqual(GridSquare.normal(a, b, c), expected)
+        
