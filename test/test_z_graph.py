@@ -170,6 +170,12 @@ class TestZGraph(unittest.TestCase):
         
         self.assertEqual(graph.solid_output(), expected)
     
+    def test_nb_vertices_for_const_graph(self):
+        def const_2(x, y):
+            return 2
+        graph = ZGraph((0,1), (0,1), const_2, 10)
+        self.assertEqual(245, len(graph.solid_output().facets))
+
     def test_triangulate_square(self):
         top_left_front     = stl.Vector3d(0, 0, 2)
         top_right_front    = stl.Vector3d(1, 0, 2)
