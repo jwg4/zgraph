@@ -35,6 +35,27 @@ class TestGridSquare(unittest.TestCase):
         a = Vector3d(1, 0, 0)
         b = Vector3d(0, 1, 0)
         c = Vector3d(0, 0, 1)
-        expected = Vector3d(sqrt(3), sqrt(3), sqrt(3))
+        expected = Vector3d(1/sqrt(3), 1/sqrt(3), 1/sqrt(3))
+        self.assertEqual(GridSquare.normal(a, b, c), expected)
+        
+    def test_normal2(self):
+        a = Vector3d(0, 0, 1)
+        b = Vector3d(1, 0, 1)
+        c = Vector3d(1, 1, 1)
+        expected = Vector3d(0, 0, 1)
+        self.assertEqual(GridSquare.normal(a, b, c), expected)
+        
+    def test_normal_jk(self):
+        a = Vector3d(0, 0, 0)
+        b = Vector3d(0, 1, 0)
+        c = Vector3d(0, 0, 1)
+        expected = Vector3d(1, 0, 0)
+        self.assertEqual(GridSquare.normal(a, b, c), expected)
+        
+    def test_normal_ij(self):
+        a = Vector3d(0, 0, 0)
+        b = Vector3d(1, 0, 0)
+        c = Vector3d(0, 1, 0)
+        expected = Vector3d(0, 0, 1)
         self.assertEqual(GridSquare.normal(a, b, c), expected)
         

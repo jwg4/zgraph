@@ -4,6 +4,7 @@ Created on Sun Jul  5 08:55:40 2015
 
 @author: jack
 """
+from math import sqrt
 
 import stl
 
@@ -24,6 +25,16 @@ class GridSquare(object):
         ]
 
     @staticmethod
+    def __normalize(v):
+        size = sqrt(v[0]**2 + v[1]**2 + v[2]**2)
+        return stl.Vector3d(v[0]/size, v[1]/size, v[2]/size)
+
+    @staticmethod
     def normal(v1, v2, v3):
-        return stl.Vector3d(0, 0, 0)
+        u1 = (v2[0] - v1[0], v2[1] - v1[1], v2[2] - v1[2])
+        u2 = (v3[0] - v1[0], v3[1] - v1[1], v3[2] - v1[2])
+        x = u1[1] * u2[2] - u1[2] * u2[1]        
+        y = u1[2] * u2[0] - u1[0] * u2[2]        
+        z = u1[0] * u2[1] - u1[1] * u2[0]       
+        return GridSquare.__normalize(stl.Vector3d(x, y, z))
         
