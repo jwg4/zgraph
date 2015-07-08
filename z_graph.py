@@ -22,8 +22,6 @@ class ZGraph(object):
         self.x_range = x_range
         self.y_range = y_range
         self.f = f
-        self.x_n = n
-        self.y_n = n
         self.__x_series = TickSeries(x_range, n)
         self.__y_series = TickSeries(y_range, n)
         
