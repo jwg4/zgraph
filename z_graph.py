@@ -8,6 +8,7 @@ Created on Sat Jul  4 14:03:34 2015
 import stl
 
 from grid_square import GridSquare
+from tick_series import TickSeries
 
 class ZGraph(object):
     rightw = stl.Vector3d(1, 0, 0)
@@ -23,10 +24,12 @@ class ZGraph(object):
         self.f = f
         self.x_n = n
         self.y_n = n
+        self.__x_series = TickSeries(x_range, n)
+        self.__y_series = TickSeries(y_range, n)
         
     def __grid_squares(self):
-        x_ticks = self.__x_series
-        y_ticks = self.__y_series
+        x_ticks = self.__x_series.ticks
+        y_ticks = self.__y_series.ticks
         for y in range(0, self.y_n):
             for x in range(0, self.x_n):
                 yield GridSquare(*
@@ -67,14 +70,6 @@ class ZGraph(object):
         start = range_[0]
         return [ (start + n * step_size) for n in range(0, n + 1) ]
 
-    @property
-    def __x_series(self):
-        return self.__series(self.x_range, self.x_n)
-            
-    @property
-    def __y_series(self):
-        return self.__series(self.y_range, self.y_n)
-            
     def __vector_f(self, x, y):
         return stl.Vector3d(x, y, self.f(x, y))            
             
@@ -100,7 +95,7 @@ class ZGraph(object):
         second_corner = stl.Vector3d(self.x_range[1], y, 0)
         value_vectors = [ 
                             self.__vector_f(x, y)
-                            for x in self.__x_series
+                            for x in self.__x_series.ticks
                         ]
         return self.__make_face(normal,
                                 first_corner, 
@@ -121,7 +116,7 @@ class ZGraph(object):
         second_corner = stl.Vector3d(x, self.y_range[1], 0)
         value_vectors = [ 
                             self.__vector_f(x, y)
-                            for y in self.__y_series
+                            for y in self.__y_series.ticks
                         ]
         return self.__make_face(normal,
                                 first_corner, 
