@@ -28,19 +28,17 @@ class ZGraph(object):
         self.__y_series = TickSeries(y_range, n)
         
     def __grid_squares(self):
-        x_ticks = self.__x_series.ticks
-        y_ticks = self.__y_series.ticks
-        for y in range(0, self.y_n):
-            for x in range(0, self.x_n):
+        for y1, y2 in self.__y_series.pairs:
+            for x1, x2 in self.__x_series.pairs:
                 yield GridSquare(*
                     [
                         self.__vector_f(*pair)
                             for pair in
                             [
-                                (x_ticks[x], y_ticks[y]),    
-                                (x_ticks[x+1], y_ticks[y]),    
-                                (x_ticks[x+1], y_ticks[y+1]),    
-                                (x_ticks[x], y_ticks[y+1]) 
+                                (x1, y1),    
+                                (x2, y1),    
+                                (x2, y2),    
+                                (x1, y2) 
                             ]
                     ]                                    
                 )
