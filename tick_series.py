@@ -16,4 +16,9 @@ class TickSeries(object):
         start = self.range[0]
         return [ (start + n * step_size) for n in range(0, self.n + 1) ]
 
+    @property
+    def pairs(self):
+        t = self.ticks
+        for n in range(0, self.n):
+            yield (t[n], t[n+1]) 
     
