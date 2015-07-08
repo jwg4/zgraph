@@ -63,7 +63,7 @@ class ZGraph(object):
             
     @staticmethod
     def __series(range_, n):
-        step_size = (range_[1] - range_[0]) / n
+        step_size = (range_[1] - range_[0]) + 0.0 / n
         start = range_[0]
         return [ (start + n * step_size) for n in range(0, n + 1) ]
 
