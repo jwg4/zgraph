@@ -180,7 +180,7 @@ class TestZGraph(unittest.TestCase):
         def const_2(x, y):
             return 2
         graph = ZGraph((0,1), (0,1), const_2, 10)
-        self.assertEqual(245, len(graph.solid_output().facets))
+        self.assertEqual(246, len(graph.solid_output().facets))
 
     def test_triangulate_square(self):
         top_left_front     = stl.Vector3d(0, 0, 2)
