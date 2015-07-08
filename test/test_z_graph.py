@@ -170,6 +170,12 @@ class TestZGraph(unittest.TestCase):
         
         self.assertEqual(graph.solid_output(), expected)
     
+    def test_x_series_for_const_graph(self):
+        def const_2(x, y):
+            return 2
+        graph = ZGraph((0,1), (0,1), const_2, 10)
+        self.assertEqual(11, len(set(graph._ZGraph__x_series)))
+
     def test_nb_vertices_for_const_graph(self):
         def const_2(x, y):
             return 2
