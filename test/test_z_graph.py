@@ -176,6 +176,18 @@ class TestZGraph(unittest.TestCase):
         graph = ZGraph((0,1), (0,1), const_2, 10)
         self.assertEqual(246, len(graph.solid_output().facets))
 
+    def test_size_of_x_and_y_for_const_graph(self):
+        def const_2(x, y):
+            return 2
+        graph = ZGraph((0,1), (0,1), const_2, 10)
+        solid = graph.solid_output()
+        x_list = [ v[0] for f in solid.facets for v in f.vertices ]
+        y_list = [ v[1] for f in solid.facets for v in f.vertices ]
+        self.assertEqual(0, min(x_list))
+        self.assertEqual(1, max(x_list))
+        self.assertEqual(0, min(y_list))
+        self.assertEqual(1, max(y_list))
+        
     def test_triangulate_square(self):
         top_left_front     = stl.Vector3d(0, 0, 2)
         top_right_front    = stl.Vector3d(1, 0, 2)
