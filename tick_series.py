@@ -12,7 +12,7 @@ class TickSeries(object):
         
     @property
     def ticks(self):
-        step_size = (self.range[1] - self.range[0]) + 0.0 / self.n
+        step_size = ((self.range[1] - self.range[0]) + 0.0) / self.n
         start = self.range[0]
         return [ (start + n * step_size) for n in range(0, self.n + 1) ]
 
