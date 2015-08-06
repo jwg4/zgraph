@@ -9,6 +9,7 @@ import stl
 
 from grid_square import GridSquare
 from tick_series import TickSeries
+from side_face import YFace, XFace
 
 class ZGraph(object):
     rightw = stl.Vector3d(1, 0, 0)
@@ -95,11 +96,11 @@ class ZGraph(object):
 
     @property
     def __front(self):
-        return self.__x_face(self.y_range[0], self.forwards, True)
+        return XFace(self.y_range[0], self.forwards, True, self).face
 
     @property
     def __back(self):
-        return self.__x_face(self.y_range[1], self.backwards, False)
+        return XFace(self.y_range[1], self.backwards, False, self).face
 
     def __y_face(self, x, normal, backwards):
         first_corner = stl.Vector3d(x, self.y_range[0], 0)
@@ -115,11 +116,11 @@ class ZGraph(object):
                                 backwards)        
     @property
     def __right(self):
-        return self.__y_face(self.x_range[1], self.rightw, True)
+        return YFace(self.x_range[1], self.rightw, True, self).face
         
     @property
     def __left(self):
-        return self.__y_face(self.x_range[0], self.leftw, False)
+        return YFace(self.x_range[0], self.leftw, False, self).face
         
     def solid_output(self):
         return stl.Solid(name="ZGraph",
