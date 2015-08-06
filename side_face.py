@@ -45,15 +45,28 @@ class YFace(SideFace):
     
     @property
     def face(self):
-        first_corner = stl.Vector3d(self.x, self.y_start, 0)
-        second_corner = stl.Vector3d(self.x, self.y_end, 0)
         value_vectors = [ 
                             self.f(self.x, y)
                             for y in self.y_ticks
                         ]
-        return self.make_face(first_corner, 
-                              second_corner, 
-                              value_vectors)        
+        base_vectors =  [
+                            stl.Vector3d(self.x, y, 0)
+                            for y in self.y_ticks
+                        ]
+        facets = []
+        for i in range(0, len(base_vectors) - 1):
+            if self.backwards:
+                points = [base_vectors[i],
+                          value_vectors[i],
+                          value_vectors[i+1],
+                          base_vectors[i+1]]
+            else:
+                points = [base_vectors[i],
+                          base_vectors[i+1],
+                          value_vectors[i+1],
+                          value_vectors[i]]                
+            facets = facets + self.triangulate(self.normal, points)
+        return facets
 
 class XFace(SideFace):
     def __init__(self, y, normal, backwards, graph):
