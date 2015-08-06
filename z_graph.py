@@ -22,15 +22,15 @@ class ZGraph(object):
         self.x_range = x_range
         self.y_range = y_range
         self.f = f
-        self.__x_series = TickSeries(x_range, n)
-        self.__y_series = TickSeries(y_range, n)
+        self.x_series = TickSeries(x_range, n)
+        self.y_series = TickSeries(y_range, n)
         
     def __grid_squares(self):
-        for y1, y2 in self.__y_series.pairs:
-            for x1, x2 in self.__x_series.pairs:
+        for y1, y2 in self.y_series.pairs:
+            for x1, x2 in self.x_series.pairs:
                 yield GridSquare(*
                     [
-                        self.__vector_f(*pair)
+                        self.vector_f(*pair)
                             for pair in
                             [
                                 (x1, y1),    
@@ -60,7 +60,7 @@ class ZGraph(object):
             )
         )
             
-    def __vector_f(self, x, y):
+    def vector_f(self, x, y):
         return stl.Vector3d(x, y, self.f(x, y))            
             
     def __make_face(self,
