@@ -23,7 +23,7 @@ class TestSideFace(unittest.TestCase):
         def f(x,y):
             return stl.Vector3d(x, y, 2 if abs(x) > 1 else 1)
         range_ = (-3, 3)
-        x_series = TickSeries(range_, 4)
+        x_series = TickSeries(range_, 3)
         graph = MockZGraph(f, range_, x_series)
         
         front_face = XFace(range_[0], stl.Vector3d(0, -1, 0), True, graph)
