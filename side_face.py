@@ -80,12 +80,25 @@ class XFace(SideFace):
     
     @property
     def face(self):
-        first_corner = stl.Vector3d(self.x_start, self.y, 0)
-        second_corner = stl.Vector3d(self.x_end, self.y, 0)
         value_vectors = [ 
                             self.f(x, self.y)
                             for x in self.x_ticks
                         ]
-        return self.make_face(first_corner, 
-                              second_corner, 
-                              value_vectors)        
+        base_vectors =  [
+                            stl.Vector3d(x, self.y, 0)
+                            for x in self.x_ticks
+                        ]
+        facets = []
+        for i in range(0, len(base_vectors) - 1):
+            if self.backwards:
+                points = [base_vectors[i],
+                          value_vectors[i],
+                          value_vectors[i+1],
+                          base_vectors[i+1]]
+            else:
+                points = [base_vectors[i],
+                          base_vectors[i+1],
+                          value_vectors[i+1],
+                          value_vectors[i]]                
+            facets = facets + self.triangulate(self.normal, points)
+        return facets
