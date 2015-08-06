@@ -64,36 +64,6 @@ class ZGraph(object):
     def vector_f(self, x, y):
         return stl.Vector3d(x, y, self.f(x, y))            
             
-    def __make_face(self,
-                    normal,
-                    first_corner, second_corner,
-                    vectors,
-                    backwards=False):
-        if backwards:
-            return self.triangulate(normal,
-                                    [first_corner] +
-                                    [second_corner] + 
-                                    list(reversed(vectors))
-                                   )
-        else:
-            return self.triangulate(normal,
-                                    [first_corner] +
-                                    vectors +
-                                    [second_corner])        
-            
-    def __x_face(self, y, normal, backwards):
-        first_corner = stl.Vector3d(self.x_range[0], y, 0)
-        second_corner = stl.Vector3d(self.x_range[1], y, 0)
-        value_vectors = [ 
-                            self.__vector_f(x, y)
-                            for x in self.__x_series.ticks
-                        ]
-        return self.__make_face(normal,
-                                first_corner, 
-                                second_corner, 
-                                value_vectors,
-                                backwards)        
-
     @property
     def __front(self):
         return XFace(self.y_range[0], self.forwards, True, self).face
@@ -102,18 +72,6 @@ class ZGraph(object):
     def __back(self):
         return XFace(self.y_range[1], self.backwards, False, self).face
 
-    def __y_face(self, x, normal, backwards):
-        first_corner = stl.Vector3d(x, self.y_range[0], 0)
-        second_corner = stl.Vector3d(x, self.y_range[1], 0)
-        value_vectors = [ 
-                            self.__vector_f(x, y)
-                            for y in self.__y_series.ticks
-                        ]
-        return self.__make_face(normal,
-                                first_corner, 
-                                second_corner, 
-                                value_vectors,
-                                backwards)        
     @property
     def __right(self):
         return YFace(self.x_range[1], self.rightw, True, self).face
